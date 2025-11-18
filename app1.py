@@ -1,30 +1,27 @@
-# Simple Calculator with User Input
+import streamlit as st
 
-print("Simple Calculator")
-print("1. Addition")
-print("2. Subtraction")
-print("3. Multiplication")
-print("4. Division")
+st.title("Simple Calculator")
 
-choice = int(input("Enter your choice (1-4): "))
+# Input fields
+num1 = st.number_input("Enter first number:", value=0.0)
+num2 = st.number_input("Enter second number:", value=0.0)
 
-num1 = float(input("Enter first number: "))
-num2 = float(input("Enter second number: "))
+# Operation selection
+operation = st.selectbox("Select operation", ["Add", "Subtract", "Multiply", "Divide"])
 
-if choice == 1:
-    print("Result =", num1 + num2)
+# Calculate result
+if st.button("Calculate"):
+    if operation == "Add":
+        result = num1 + num2
+    elif operation == "Subtract":
+        result = num1 - num2
+    elif operation == "Multiply":
+        result = num1 * num2
+    elif operation == "Divide":
+        if num2 == 0:
+            st.error("❌ Cannot divide by zero!")
+        else:
+            result = num1 / num2
 
-elif choice == 2:
-    print("Result =", num1 - num2)
-
-elif choice == 3:
-    print("Result =", num1 * num2)
-
-elif choice == 4:
-    if num2 != 0:
-        print("Result =", num1 / num2)
-    else:
-        print("Error: Division by zero is not allowed!")
-
-else:
-    print("Invalid choice! Please enter between 1 and 4.")
+    if operation != "Divide" or num2 != 0:
+        st.success(f"Result: {result}")
